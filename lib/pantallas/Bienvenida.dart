@@ -95,8 +95,8 @@ class _BienvenidaState extends State<Bienvenida> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: 'Ofertas App',
-          style: GoogleFonts.portLligatSans(
+          text: 'Bienvenidos al Portal de Ofertas!',
+          style: GoogleFonts.roboto(
             textStyle: Theme.of(context).textTheme.display1,
             fontSize: 30,
             fontWeight: FontWeight.w700,
@@ -104,11 +104,11 @@ class _BienvenidaState extends State<Bienvenida> {
           ),
           children: [
             TextSpan(
-              text: '-',
+              text: '',
               style: TextStyle(color: Colors.black, fontSize: 30),
             ),
             TextSpan(
-              text: 'Cliente',
+              text: '',
               style: TextStyle(color: Colors.white, fontSize: 30),
             ),
           ]),

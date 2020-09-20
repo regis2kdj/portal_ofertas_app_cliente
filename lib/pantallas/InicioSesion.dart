@@ -78,14 +78,9 @@ class _InicioSesionState extends State<InicioSesion> {
           //AQUI VERIFICAR QUE ESTE EN LOS CLIENTES VALIDOS DEL JSON OJO
           if (keyForm.currentState.validate()) {
             var _credencialesValidas = false;
-            usuariosClientes.cliente.forEach((_cliente) {
-              if(_cliente.email == "${userEntry.text}" && _cliente.password == "${passEntry.text}"){
-                _credencialesValidas = true;
-              }else{
-                _credencialesValidas = false;
-              }
-             }
-            );
+
+            _credencialesValidas = usuariosClientes.cliente.any((_cliente) => _cliente.email == "${userEntry.text}"
+                && _cliente.password == "${passEntry.text}");
 
             if(_credencialesValidas){
               Navigator.push(
@@ -94,7 +89,9 @@ class _InicioSesionState extends State<InicioSesion> {
               // crear button
               Widget okButton = FlatButton(
                 child: Text("OK"),
-                onPressed: () { },
+                onPressed: () {
+                  Navigator.of(context).pop(); // dismiss dialog
+                },
               );
 
               // configurar AlertDialog
@@ -284,16 +281,6 @@ class _InicioSesionState extends State<InicioSesion> {
   }
 
   //8 LOGIN
-  /*Widget _emailPasswordWidget() {
-    return Column(
-      children: <Widget>[
-        _entryField("Correo/Username"),
-        _entryField("Contrasena", isPassword: true),
-      ],
-    );
-  }*/
-
-  //8a
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[

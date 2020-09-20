@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/RegistroUsuario.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/MenuPrincipal.dart';
+import 'package:portal_ofertas_app_cliente/model/Cliente.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'widget/BezierContainer.dart';
@@ -15,6 +18,12 @@ class InicioSesion extends StatefulWidget {
 }
 
 class _InicioSesionState extends State<InicioSesion> {
+  //para uso del formulario
+  GlobalKey<FormState> keyForm = new GlobalKey();
+  TextEditingController  userEntry = new TextEditingController();
+  TextEditingController  passEntry = new TextEditingController();
+
+  //1
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -36,7 +45,8 @@ class _InicioSesionState extends State<InicioSesion> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false}) {
+  //2
+  Widget _entryField(String title, TextEditingController field, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -50,6 +60,7 @@ class _InicioSesionState extends State<InicioSesion> {
             height: 10,
           ),
           TextField(
+              controller: field,
               obscureText: isPassword,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -60,11 +71,50 @@ class _InicioSesionState extends State<InicioSesion> {
     );
   }
 
-  Widget _submitButton() {
+  //3
+  Widget _submitButton(clientes usuariosClientes) {
     return InkWell(
         onTap: () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MenuPrincipal()));
+          //AQUI VERIFICAR QUE ESTE EN LOS CLIENTES VALIDOS DEL JSON OJO
+          if (keyForm.currentState.validate()) {
+            var _credencialesValidas = false;
+            usuariosClientes.cliente.forEach((_cliente) {
+              if(_cliente.email == "${userEntry.text}" && _cliente.password == "${passEntry.text}"){
+                _credencialesValidas = true;
+              }else{
+                _credencialesValidas = false;
+              }
+             }
+            );
+
+            if(_credencialesValidas){
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => MenuPrincipal()));
+            }else{
+              // crear button
+              Widget okButton = FlatButton(
+                child: Text("OK"),
+                onPressed: () { },
+              );
+
+              // configurar AlertDialog
+              AlertDialog alert = AlertDialog(
+                title: Text("Falló inicio sesión"),
+                content: Text("Usuario o contraseña inválidos"),
+                actions: [
+                  okButton,
+                ],
+              );
+
+              // mostrar el dialogo
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return alert;
+                },
+              );
+            }
+          }
     },
     child: Container(
       width: MediaQuery.of(context).size.width,
@@ -84,13 +134,14 @@ class _InicioSesionState extends State<InicioSesion> {
               end: Alignment.centerRight,
               colors: [Color(0xffbdbdbd), Color(0xff01579b)])),
       child: Text(
-        'Entrar',
+        'Entrar', //ASI SE LLAMA EL BOTON ENTRAR EN LOGIN
         style: TextStyle(fontSize: 20, color: Colors.white),
       ),
     )
     );
   }
 
+  //4 UN o , PODRÍA SER UNA LINEA (TAMBIEN HABRIA QUE HACER UN WIDGET DE LINEA)
   Widget _divider() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -124,6 +175,7 @@ class _InicioSesionState extends State<InicioSesion> {
     );
   }
 
+  //5 EL FACE..
   Widget _facebookButton() {
     return Container(
       height: 50,
@@ -172,6 +224,7 @@ class _InicioSesionState extends State<InicioSesion> {
     );
   }
 
+  //6 NO TIENES CUENTA, ESTA ABAJITO DE ENTRAR CON FACE...
   Widget _createAccountLabel() {
     return InkWell(
       onTap: () {
@@ -205,6 +258,7 @@ class _InicioSesionState extends State<InicioSesion> {
     );
   }
 
+  //7 TITULO QUE DICE OFERTAS APP - INICIE SESION
   Widget _title() {
     return RichText(
       textAlign: TextAlign.center,
@@ -229,17 +283,41 @@ class _InicioSesionState extends State<InicioSesion> {
     );
   }
 
-  Widget _emailPasswordWidget() {
+  //8 LOGIN
+  /*Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
         _entryField("Correo/Username"),
         _entryField("Contrasena", isPassword: true),
       ],
     );
+  }*/
+
+  //8a
+  Widget _emailPasswordWidget() {
+    return Column(
+      children: <Widget>[
+
+        new Form(
+          key: keyForm,
+          child: Column(
+            children: <Widget>[
+              _entryField("Correo/Username",userEntry),
+              _entryField("Contrasena",passEntry, isPassword: true),
+            ],
+          )
+        ),
+      ],
+    );
   }
 
+  //9 AQUI LLAMA TODOS LOS ELEMENTOS DEL PAISAJE INICIO SESION
   @override
   Widget build(BuildContext context) {
+    var jsonData = '{"clientes":[{"id":13,"date_created":"2020-09-16T01:13:40","date_created_gmt":"2020-09-16T01:13:40","date_modified":null,"date_modified_gmt":null,"email":"baster2602@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"baster2602","password":"123"},{"id":19,"date_created":"2020-09-17T21:59:22","date_created_gmt":"2020-09-17T21:59:22","date_modified":null,"date_modified_gmt":null,"email":"eligiovega16@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"eligiovega16","password":"123"},{"id":12,"date_created":"2020-09-15T18:29:18","date_created_gmt":"2020-09-15T18:29:18","date_modified":null,"date_modified_gmt":null,"email":"machavez02@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"machavez02","password":"123"}]}';
+    var parsedJson = json.decode(jsonData);
+    var usuariosClientes = clientes.fromJson(parsedJson);
+
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Container(
@@ -262,7 +340,7 @@ class _InicioSesionState extends State<InicioSesion> {
                       SizedBox(height: 50),
                       _emailPasswordWidget(),
                       SizedBox(height: 20),
-                      _submitButton(),
+                      _submitButton(usuariosClientes),
                       Container(
                         padding: EdgeInsets.symmetric(vertical: 10),
                         alignment: Alignment.centerRight,
@@ -282,5 +360,7 @@ class _InicioSesionState extends State<InicioSesion> {
             ],
           ),
         ));
-  }
+  }//AQUI TERMINA BUILD
+
+ //FALTA WIDGET PARA OLVIDASTE TU CLAVE
 }

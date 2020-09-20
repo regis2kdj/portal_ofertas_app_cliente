@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/InicioSesion.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/RegistroUsuario.dart';
@@ -12,13 +14,19 @@ class Bienvenida extends StatefulWidget {
   _BienvenidaState createState() => _BienvenidaState();
 }
 
+//buena estartegia de regis los botones de bienvenida le dan un paso a paso para llamar los servicios
 class _BienvenidaState extends State<Bienvenida> {
+
+  //widget del submit cuando aprieta el boton iniciar sesion
+  //ok
   Widget _submitButton() {
     return InkWell(
       onTap: () {
         Navigator.push(
+          //aqui va llamado al servicio de clientes por el momento ver parser
             context, MaterialPageRoute(builder: (context) => InicioSesion()));
       },
+      //ah estos son los elementos user y paswd
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.symmetric(vertical: 13),
@@ -34,17 +42,19 @@ class _BienvenidaState extends State<Bienvenida> {
             ],
             color: Colors.white),
         child: Text(
-          'Iniciar Sesión',
+          'Iniciar Sesión', //así se llama el boton que invoca a: http://3.83.230.246/clientes.php
           style: TextStyle(fontSize: 20, color: Color(0xff01579b)),
         ),
       ),
     );
   }
 
+  //este wid es para ele registro
   Widget _signUpButton() {
     return InkWell(
       onTap: () {
         Navigator.push(
+          //servicio para segundo release aqui se llama y se hace post
             context, MaterialPageRoute(builder: (context) => RegistroUsuario()));
       },
       child: Container(
@@ -63,6 +73,7 @@ class _BienvenidaState extends State<Bienvenida> {
     );
   }
 
+  //cuando se use este wid estará nice!
   Widget _label() {
     return Container(
         margin: EdgeInsets.only(top: 40, bottom: 20),

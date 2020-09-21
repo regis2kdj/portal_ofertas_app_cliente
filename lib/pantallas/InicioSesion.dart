@@ -5,13 +5,17 @@ import 'package:portal_ofertas_app_cliente/pantallas/RegistroUsuario.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/MenuPrincipal.dart';
 import 'package:portal_ofertas_app_cliente/model/Cliente.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 
 import 'widget/BezierContainer.dart';
 
 class InicioSesion extends StatefulWidget {
-  InicioSesion({Key key, this.title}) : super(key: key);
+  InicioSesion({Key key, this.title, this.client}) : super(key: key);
 
   final String title;
+  final List<Cliente> client;
 
   @override
   _InicioSesionState createState() => _InicioSesionState();
@@ -22,6 +26,26 @@ class _InicioSesionState extends State<InicioSesion> {
   GlobalKey<FormState> keyForm = new GlobalKey();
   TextEditingController  userEntry = new TextEditingController();
   TextEditingController  passEntry = new TextEditingController();
+  //para circular
+  double _progress = 0;
+
+  void startTimer() {
+    new Timer.periodic(
+      Duration(seconds: 1),
+          (Timer timer) => setState(
+            () {
+          if (_progress == 1) {
+            timer.cancel();
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MenuPrincipal()));
+          } else {
+            _progress += 0.25;
+          }
+        },
+      ),
+    );
+  }
+
 
   //1
   Widget _backButton() {
@@ -71,20 +95,23 @@ class _InicioSesionState extends State<InicioSesion> {
     );
   }
 
-  //3
-  Widget _submitButton(clientes usuariosClientes) {
+  //3 clientes usuariosClientes)
+  Widget _submitButton(List<Cliente> usuariosClientes) {
     return InkWell(
         onTap: () {
+          setState(() {
+            _progress = 0;
+          });
+
           //AQUI VERIFICAR QUE ESTE EN LOS CLIENTES VALIDOS DEL JSON OJO
           if (keyForm.currentState.validate()) {
             var _credencialesValidas = false;
 
-            _credencialesValidas = usuariosClientes.cliente.any((_cliente) => _cliente.email == "${userEntry.text}"
-                && _cliente.password == "${passEntry.text}");
+            _credencialesValidas = usuariosClientes.any((_cliente) => _cliente.email == "${userEntry.text}"
+                && _cliente.username == "${passEntry.text}");
 
             if(_credencialesValidas){
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => MenuPrincipal()));
+              startTimer();
             }else{
               // crear button
               Widget okButton = FlatButton(
@@ -130,7 +157,7 @@ class _InicioSesionState extends State<InicioSesion> {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [Color(0xffbdbdbd), Color(0xff01579b)])),
-      child: Text(
+      child:  Text(
         'Entrar', //ASI SE LLAMA EL BOTON ENTRAR EN LOGIN
         style: TextStyle(fontSize: 20, color: Colors.white),
       ),
@@ -155,7 +182,10 @@ class _InicioSesionState extends State<InicioSesion> {
               ),
             ),
           ),
-          Text('o'),
+          CircularProgressIndicator(
+            value: _progress,
+          ),
+          //Text('o'),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -301,9 +331,9 @@ class _InicioSesionState extends State<InicioSesion> {
   //9 AQUI LLAMA TODOS LOS ELEMENTOS DEL PAISAJE INICIO SESION
   @override
   Widget build(BuildContext context) {
-    var jsonData = '{"clientes":[{"id":13,"date_created":"2020-09-16T01:13:40","date_created_gmt":"2020-09-16T01:13:40","date_modified":null,"date_modified_gmt":null,"email":"baster2602@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"baster2602","password":"123"},{"id":19,"date_created":"2020-09-17T21:59:22","date_created_gmt":"2020-09-17T21:59:22","date_modified":null,"date_modified_gmt":null,"email":"eligiovega16@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"eligiovega16","password":"123"},{"id":12,"date_created":"2020-09-15T18:29:18","date_created_gmt":"2020-09-15T18:29:18","date_modified":null,"date_modified_gmt":null,"email":"machavez02@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"machavez02","password":"123"}]}';
-    var parsedJson = json.decode(jsonData);
-    var usuariosClientes = clientes.fromJson(parsedJson);
+    //var jsonData = '{"clientes":[{"id":13,"date_created":"2020-09-16T01:13:40","date_created_gmt":"2020-09-16T01:13:40","date_modified":null,"date_modified_gmt":null,"email":"baster2602@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"baster2602","password":"123"},{"id":19,"date_created":"2020-09-17T21:59:22","date_created_gmt":"2020-09-17T21:59:22","date_modified":null,"date_modified_gmt":null,"email":"eligiovega16@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"eligiovega16","password":"123"},{"id":12,"date_created":"2020-09-15T18:29:18","date_created_gmt":"2020-09-15T18:29:18","date_modified":null,"date_modified_gmt":null,"email":"machavez02@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"machavez02","password":"123"}]}';
+    //var parsedJson = json.decode(jsonData);
+    //var usuariosClientes = clientes.fromJson(parsedJson);
 
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -327,7 +357,8 @@ class _InicioSesionState extends State<InicioSesion> {
                       SizedBox(height: 50),
                       _emailPasswordWidget(),
                       SizedBox(height: 20),
-                      _submitButton(usuariosClientes),
+                      //_submitButton(),
+                      _submitButton(widget.client),
                       Container(
                         padding: EdgeInsets.symmetric(vertical: 10),
                         alignment: Alignment.centerRight,
@@ -338,7 +369,7 @@ class _InicioSesionState extends State<InicioSesion> {
                       _divider(),
                       _facebookButton(),
                       SizedBox(height: height * .055),
-                      _createAccountLabel(),
+                      _createAccountLabel()
                     ],
                   ),
                 ),
@@ -346,8 +377,6 @@ class _InicioSesionState extends State<InicioSesion> {
               Positioned(top: 40, left: 0, child: _backButton()),
             ],
           ),
-        ));
+        ),);
   }//AQUI TERMINA BUILD
-
- //FALTA WIDGET PARA OLVIDASTE TU CLAVE
 }

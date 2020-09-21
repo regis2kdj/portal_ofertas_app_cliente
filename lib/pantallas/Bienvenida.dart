@@ -1,9 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:portal_ofertas_app_cliente/model/Cliente.dart';
+import 'package:portal_ofertas_app_cliente/service/HttpService.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/InicioSesion.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/RegistroUsuario.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+
 
 class Bienvenida extends StatefulWidget {
   Bienvenida({Key key, this.title}) : super(key: key);
@@ -14,17 +18,18 @@ class Bienvenida extends StatefulWidget {
   _BienvenidaState createState() => _BienvenidaState();
 }
 
-//buena estartegia de regis los botones de bienvenida le dan un paso a paso para llamar los servicios
+//buena estrategia de los botones de bienvenida le dan un paso a paso para llamar los servicios
 class _BienvenidaState extends State<Bienvenida> {
+  HttpService httpService = HttpService();
+  List<Cliente> clientte;
 
   //widget del submit cuando aprieta el boton iniciar sesion
   //ok
   Widget _submitButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          //aqui va llamado al servicio de clientes por el momento ver parser
-            context, MaterialPageRoute(builder: (context) => InicioSesion()));
+        List<Cliente> client = clientte;
+        Navigator.push(context, MaterialPageRoute(builder: (context) => InicioSesion(client : client)));
       },
       //ah estos son los elementos user y paswd
       child: Container(
@@ -152,17 +157,37 @@ class _BienvenidaState extends State<Bienvenida> {
             children: <Widget>[
               _title(),
               SizedBox(
-                height: 80,
+                height: 30,
+              ),
+              Center(
+                child: FutureBuilder<List<Cliente>>(
+                  future: httpService.fetchClientes(http.Client()),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      clientte = snapshot.data;
+                      print("clientes encontrados");
+                      return Text("");
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}",
+                        style: TextStyle(color: Colors.white.withOpacity(0.6)),);
+                    }
+                    // By default, show a loading spinner.
+                    return CircularProgressIndicator();
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 60,
               ),
               _submitButton(),
               SizedBox(
-                height: 20,
+                height: 15,
               ),
               _signUpButton(),
               SizedBox(
-                height: 20,
+                height: 15,
               ),
-              _label()
+              _label(),
             ],
           ),
         ),

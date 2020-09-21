@@ -1,25 +1,3 @@
-class clientes {
-  List<Cliente> cliente;
-
-  clientes({this.cliente});
-
-  clientes.fromJson(Map<String, dynamic> json) {
-    if (json['clientes'] != null) {
-      cliente = new List<Cliente>();
-      json['clientes'].forEach((v) {
-        cliente.add(new Cliente.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.cliente != null) {
-      data['clientes'] = this.cliente.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
 
 class Cliente {
   final int id;
@@ -28,12 +6,14 @@ class Cliente {
   final Null dateModified;
   final Null dateModifiedGmt;
   final String email;
-  final Null firstName;
-  final Null lastName;
+  final String firstName;
+  final String lastName;
   final String role;
   final String username;
-  final String password;
+  //final String password;
+  final String avatarUrl;
 
+  
   Cliente(
       { this.id,
         this.dateCreated,
@@ -45,7 +25,8 @@ class Cliente {
         this.lastName,
         this.role,
         this.username,
-        this.password});
+        //this.password,
+        this.avatarUrl});
 
   Cliente.fromJson(Map<String, dynamic> json) :
     id = json['id'],
@@ -58,7 +39,8 @@ class Cliente {
     lastName = json['last_name'],
     role = json['role'],
     username = json['username'],
-    password = json['password'];
+    //password = json['password'],
+    avatarUrl = json['avatar_url'];
 
 
   Map<String, dynamic> toJson() {
@@ -73,7 +55,8 @@ class Cliente {
     data['last_name'] = this.lastName;
     data['role'] = this.role;
     data['username'] = this.username;
-    data['password'] = this.password;
+    //data['password'] = this.password;
+    data['avatar_url'] = this.avatarUrl;
     return data;
   }
 }

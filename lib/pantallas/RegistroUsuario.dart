@@ -120,8 +120,8 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: 'Ofertas App',
-          style: GoogleFonts.portLligatSans(
+          text: 'Regístrese para ingresar!',
+          style: GoogleFonts.roboto(
             textStyle: Theme.of(context).textTheme.display1,
             fontSize: 30,
             fontWeight: FontWeight.w700,
@@ -129,11 +129,11 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
           ),
           children: [
             TextSpan(
-              text: '-',
+              text: '',
               style: TextStyle(color: Colors.black, fontSize: 30),
             ),
             TextSpan(
-              text: 'Registro de Usuario',
+              text: '',
               style: TextStyle(color: Color(0xff01579b), fontSize: 30),
             ),
           ]),

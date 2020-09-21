@@ -260,8 +260,8 @@ class _InicioSesionState extends State<InicioSesion> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: 'Ofertas App',
-          style: GoogleFonts.portLligatSans(
+          text: 'Ingrese sus datos',
+          style: GoogleFonts.roboto(
             textStyle: Theme.of(context).textTheme.display1,
             fontSize: 30,
             fontWeight: FontWeight.w700,
@@ -269,11 +269,11 @@ class _InicioSesionState extends State<InicioSesion> {
           ),
           children: [
             TextSpan(
-              text: '-',
+              text: '',
               style: TextStyle(color: Colors.black, fontSize: 30),
             ),
             TextSpan(
-              text: 'Inicie Sesión',
+              text: '',
               style: TextStyle(color: Color(0xff01579b), fontSize: 30),
             ),
           ]),

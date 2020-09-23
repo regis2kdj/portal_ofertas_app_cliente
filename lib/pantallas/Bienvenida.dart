@@ -28,6 +28,10 @@ class _BienvenidaState extends State<Bienvenida> {
   Widget _submitButton() {
     return InkWell(
       onTap: () {
+        /*httpService.fetchClientes(http.Client()).then((value)  => {
+           validar(value)
+        });*/
+
         List<Cliente> client = clientte;
         Navigator.push(context, MaterialPageRoute(builder: (context) => InicioSesion(client : client)));
       },
@@ -53,6 +57,13 @@ class _BienvenidaState extends State<Bienvenida> {
       ),
     );
   }
+
+  /*validar(value){
+    List<Cliente> client = value;
+    if(client!= null){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => InicioSesion(client : client)));
+    }
+  }*/
 
   //este wid es para ele registro
   Widget _signUpButton() {

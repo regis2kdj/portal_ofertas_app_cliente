@@ -3,8 +3,8 @@ class Cliente {
   final int id;
   final String dateCreated;
   final String dateCreatedGmt;
-  final Null dateModified;
-  final Null dateModifiedGmt;
+  final String dateModified;
+  final String dateModifiedGmt;
   final String email;
   final String firstName;
   final String lastName;

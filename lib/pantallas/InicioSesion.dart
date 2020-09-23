@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/RegistroUsuario.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/MenuPrincipal.dart';
+import 'package:portal_ofertas_app_cliente/service/HttpService.dart';
 import 'package:portal_ofertas_app_cliente/model/Cliente.dart';
+import 'package:portal_ofertas_app_cliente/model/Usuario.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
@@ -22,6 +24,9 @@ class InicioSesion extends StatefulWidget {
 }
 
 class _InicioSesionState extends State<InicioSesion> {
+  //servicio
+  HttpService httpService = HttpService();
+
   //para uso del formulario
   GlobalKey<FormState> keyForm = new GlobalKey();
   TextEditingController  userEntry = new TextEditingController();
@@ -105,39 +110,15 @@ class _InicioSesionState extends State<InicioSesion> {
 
           //AQUI VERIFICAR QUE ESTE EN LOS CLIENTES VALIDOS DEL JSON OJO
           if (keyForm.currentState.validate()) {
-            var _credencialesValidas = false;
+            var user = "${userEntry.text}";
+            var pass = "${passEntry.text}";
 
-            _credencialesValidas = usuariosClientes.any((_cliente) => _cliente.email == "${userEntry.text}"
-                && _cliente.username == "${passEntry.text}");
-
-            if(_credencialesValidas){
-              startTimer();
-            }else{
-              // crear button
-              Widget okButton = FlatButton(
-                child: Text("OK"),
-                onPressed: () {
-                  Navigator.of(context).pop(); // dismiss dialog
-                },
-              );
-
-              // configurar AlertDialog
-              AlertDialog alert = AlertDialog(
-                title: Text("Falló inicio sesión"),
-                content: Text("Usuario o contraseña inválidos"),
-                actions: [
-                  okButton,
-                ],
-              );
-
-              // mostrar el dialogo
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return alert;
-                },
-              );
-            }
+            httpService.fetchLogin(http.Client(),user, pass).then((value)  => {
+              validarUsuario(value)
+            }).catchError((e) {
+              enviarError(e);
+              return 42;
+            });
           }
     },
     child: Container(
@@ -379,4 +360,39 @@ class _InicioSesionState extends State<InicioSesion> {
           ),
         ),);
   }//AQUI TERMINA BUILD
+
+  validarUsuario(Usuario usuario){
+    var _credencialesValidas = usuario != null
+        ? true : false;
+    if(_credencialesValidas){
+      startTimer();
+    }
+  }
+
+  enviarError(Exception e){
+    // crear button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop(); // dismiss dialog
+      },
+    );
+
+    // configurar AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Falló inicio sesión"),
+      content: Text("${e.toString()}"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // mostrar el dialogo
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

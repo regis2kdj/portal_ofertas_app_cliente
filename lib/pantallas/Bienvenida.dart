@@ -58,12 +58,6 @@ class _BienvenidaState extends State<Bienvenida> {
     );
   }
 
-  /*validar(value){
-    List<Cliente> client = value;
-    if(client!= null){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => InicioSesion(client : client)));
-    }
-  }*/
 
   //este wid es para ele registro
   Widget _signUpButton() {

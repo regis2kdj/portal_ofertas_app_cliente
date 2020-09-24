@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'widget/BezierContainer.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/MenuPrincipal.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class CrearQR extends StatefulWidget {
-  CrearQR({Key key, this.title}) : super(key: key);
+  CrearQR({Key key, this.title, this.idOrden}) : super(key: key);
 
   final String title;
+  final int idOrden;
 
   @override
   _CrearQRState createState() => _CrearQRState();
@@ -67,22 +69,6 @@ class _CrearQRState extends State<CrearQR> {
     );
   }
 
-
-  Widget _title() {
-    return RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-            text: 'QR',
-            style: GoogleFonts.portLligatSans(
-              textStyle: Theme.of(context).textTheme.display1,
-              fontSize: 30,
-              fontWeight: FontWeight.w700,
-              color: Color(0xff01579b),
-            )
-        )
-    );
-  }
-
   Widget _subtitle() {
     return RichText(
         textAlign: TextAlign.center,
@@ -116,15 +102,14 @@ class _CrearQRState extends State<CrearQR> {
                   //ACCION DE CREAR CODIGO QR
                   //Navigator.push(context, MaterialPageRoute(builder: (context) => VerOferta()))
                 },
-                child: Image.asset(
-                  "images/crearte_qr_icon.png",
-                  width: 340,
-                  height: 340,
-                  fit: BoxFit.cover,
-                ),
+                child: QrImage(
+                  data: widget.idOrden.toString(),
+                  version: QrVersions.auto,
+                  size: 320,
+                  gapless: false,
+                )
               ),
             ),
-
           ],
         ),
       ),
@@ -153,7 +138,6 @@ class _CrearQRState extends State<CrearQR> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(height: height * .2),
-                    _title(),
                     _subtitle(),
                     SizedBox(
                       height: 10,

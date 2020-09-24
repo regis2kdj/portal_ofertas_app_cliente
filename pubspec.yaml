@@ -31,6 +31,7 @@ dependencies:
   http: any             #creada por RR
   provider:             #creada por RR
   google_fonts: ^0.3.5  #creada por RR
+  qr_flutter: ^3.1.0    #creada por EV
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +58,7 @@ flutter:
     - images/crearte_qr_icon.png  #creada por RR
     - images/register.png #creado por elvis365
     - images/placeholder.svg #creado por elvis365
+    - images/exit.png #creado por elvis365
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

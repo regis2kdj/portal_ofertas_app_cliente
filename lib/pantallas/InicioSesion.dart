@@ -312,9 +312,6 @@ class _InicioSesionState extends State<InicioSesion> {
   //9 AQUI LLAMA TODOS LOS ELEMENTOS DEL PAISAJE INICIO SESION
   @override
   Widget build(BuildContext context) {
-    //var jsonData = '{"clientes":[{"id":13,"date_created":"2020-09-16T01:13:40","date_created_gmt":"2020-09-16T01:13:40","date_modified":null,"date_modified_gmt":null,"email":"baster2602@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"baster2602","password":"123"},{"id":19,"date_created":"2020-09-17T21:59:22","date_created_gmt":"2020-09-17T21:59:22","date_modified":null,"date_modified_gmt":null,"email":"eligiovega16@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"eligiovega16","password":"123"},{"id":12,"date_created":"2020-09-15T18:29:18","date_created_gmt":"2020-09-15T18:29:18","date_modified":null,"date_modified_gmt":null,"email":"machavez02@gmail.com","first_name":null,"last_name":null,"role":"customer","username":"machavez02","password":"123"}]}';
-    //var parsedJson = json.decode(jsonData);
-    //var usuariosClientes = clientes.fromJson(parsedJson);
 
     final height = MediaQuery.of(context).size.height;
     return Scaffold(

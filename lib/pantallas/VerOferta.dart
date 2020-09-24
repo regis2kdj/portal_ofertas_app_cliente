@@ -30,6 +30,9 @@ class _VerOfertaState extends State<VerOferta> {
   //servicio
   HttpService httpService = HttpService();
 
+  //orden de producto
+  int idOrden;
+
   final DatosApp datosApp;
 
   _VerOfertaState(this.datosApp);
@@ -88,7 +91,7 @@ class _VerOfertaState extends State<VerOferta> {
   Widget _submitButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => CrearQR()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => CrearQR(idOrden : idOrden)));
       },
 
       child: Container(
@@ -144,6 +147,7 @@ class _VerOfertaState extends State<VerOferta> {
                         future: httpService.obtenerProducto(datosApp.idOferta),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) { //checks if the response returns valid data
+                            idOrden = snapshot.data.id;
                             return Center(
                               child: Column(
                                 children: <Widget>[

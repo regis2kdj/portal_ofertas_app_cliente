@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'widget/BezierContainer.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/InicioSesion.dart';
-import 'package:portal_ofertas_app_cliente/pantallas/CrearQR.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/RegistroUsuario.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/BuscarOferta.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/ComprarOferta.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/ListarOfertas.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:async';
 
 class MenuPrincipal extends StatefulWidget {
   MenuPrincipal({Key key, this.title}) : super(key: key);
@@ -18,23 +18,87 @@ class MenuPrincipal extends StatefulWidget {
 }
 
 class _MenuPrincipalState extends State<MenuPrincipal> {
-  Widget _backButton() {
+
+  double _progress = 0;
+
+  void startTimer() {
+    new Timer.periodic(
+      Duration(seconds: 1),
+          (Timer timer) => setState(
+            () {
+          if (_progress == 1) {
+            timer.cancel();
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => InicioSesion()));
+          } else {
+            _progress += 0.25;
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _exitButton() {
     return InkWell(
       onTap: () {
-        Navigator.pop(context);
+
+        setState(() {
+          _progress = 0;
+        });
+
+        startTimer();
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
+              padding: EdgeInsets.only(left: 2, top: 10, bottom: 10),
+              child: Image.asset("images/exit.png", width: 25, height: 25, fit: BoxFit.cover),
             ),
-            Text('Atras',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+            SizedBox(
+              width: 10,
+            ),
+            Text('salir',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _divider() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: 20,
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Divider(
+                thickness: 1,
+              ),
+            ),
+          ),
+          CircularProgressIndicator(
+            value: _progress,
+          ),
+          //Text('o'),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Divider(
+                thickness: 1,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 20,
+          ),
+        ],
       ),
     );
   }
@@ -266,8 +330,10 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
                     SizedBox(height: height * .2),
                     _title(),
                     SizedBox(
-                      height: 50,
+                      height: 20,
                     ),
+
+                    _divider(),
 
                     Row (
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -286,7 +352,7 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
                     ),
 
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                    // _submitButton(), //boton submit
                     SizedBox(height: height * .14),
@@ -294,7 +360,7 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
                 ),
               ),
             ),
-            Positioned(top: 40, left: 0, child: _backButton()),
+            Positioned(top: 30, left: 0, child: _exitButton()),
           ],
         ),
       ),

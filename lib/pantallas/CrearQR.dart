@@ -77,7 +77,7 @@ class _CrearQRState extends State<CrearQR> {
         textAlign: TextAlign.center,
         text: TextSpan(
             text: 'Para redimir su oferta, espere a que el comercio lea el código generado',
-            style: GoogleFonts.portLligatSans(
+            style: GoogleFonts.roboto(
               textStyle: Theme.of(context).textTheme.title,
               fontSize: 20,
               fontWeight: FontWeight.w700,

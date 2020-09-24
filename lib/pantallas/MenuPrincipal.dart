@@ -157,8 +157,8 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: 'Ofertas App - Menu Principal',
-          style: GoogleFonts.portLligatSans(
+          text: 'Portal de Ofertas',
+          style: GoogleFonts.roboto(
             textStyle: Theme.of(context).textTheme.display1,
             fontSize: 30,
             fontWeight: FontWeight.w700,
@@ -168,7 +168,7 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
     );
   }
 
-  Widget _buttonsMenu_CreateQR() {
+  /*Widget _buttonsMenu_CreateQR() {
     return InkWell(
 
       child: Container(
@@ -200,7 +200,7 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
         ),
       ),
     );
-  }
+  }*/
 
   Widget _buttonsMenu_Find() {
     return InkWell(
@@ -237,7 +237,7 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
   }
 
 
-  Widget _buttonsMenu_BuyOffer() {
+  /*Widget _buttonsMenu_BuyOffer() {
     return InkWell(
 
       child: Container(
@@ -269,7 +269,7 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
         ),
       ),
     );
-  }
+  }*/
 
 
   Widget _buttonsMenu_ListAll() {
@@ -338,15 +338,16 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
                     Row (
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        _buttonsMenu_CreateQR(),
-                        _buttonsMenu_Find(),
+                        //_buttonsMenu_CreateQR(),
+                        //_buttonsMenu_Find(),
                       ],
                     ),
 
                     Row (
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        _buttonsMenu_BuyOffer(),
+                        _buttonsMenu_Find(),
+                        //_buttonsMenu_BuyOffer(),
                         _buttonsMenu_ListAll(),
                       ],
                     ),

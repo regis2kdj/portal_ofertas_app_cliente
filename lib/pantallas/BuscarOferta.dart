@@ -139,7 +139,7 @@ class _BuscarOfertaState extends State<BuscarOferta> {
         textAlign: TextAlign.center,
         text: TextSpan(
             text: 'Compraste una oferta, puedes buscar aquí!',
-            style: GoogleFonts.portLligatSans(
+            style: GoogleFonts.roboto(
               textStyle: Theme.of(context).textTheme.display1,
               fontSize: 30,
               fontWeight: FontWeight.w700,

@@ -78,7 +78,7 @@ class _VerOfertaState extends State<VerOferta> {
         textAlign: TextAlign.center,
         text: TextSpan(
             text: 'Detalle de la Oferta',
-            style: GoogleFonts.portLligatSans(
+            style: GoogleFonts.roboto(
               textStyle: Theme.of(context).textTheme.display1,
               fontSize: 30,
               fontWeight: FontWeight.w700,
@@ -112,7 +112,7 @@ class _VerOfertaState extends State<VerOferta> {
                 end: Alignment.centerRight,
                 colors: [Color(0xffbdbdbd), Color(0xff01579b)])),
         child: Text(
-          'Crear QR',
+          'Generar QR',
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
@@ -160,7 +160,7 @@ class _VerOfertaState extends State<VerOferta> {
                                       textAlign: TextAlign.center,
                                       text: TextSpan(
                                           text: '#Orden : ${datosApp.idOferta}',
-                                          style: GoogleFonts.portLligatSans(
+                                          style: GoogleFonts.roboto(
                                             textStyle: Theme.of(context).textTheme.display1,
                                             fontSize: 30,
                                             fontWeight: FontWeight.w700,

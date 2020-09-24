@@ -31,7 +31,7 @@ dependencies:
   http: any             #creada por RR
   provider:             #creada por RR
   google_fonts: ^0.3.5  #creada por RR
-  qr_flutter: ^3.1.0    #creada por EV
+  qr_flutter: any    #creada por EV
 
 dev_dependencies:
   flutter_test:

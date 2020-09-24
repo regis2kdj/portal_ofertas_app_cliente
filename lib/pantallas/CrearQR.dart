@@ -5,6 +5,7 @@ import 'package:portal_ofertas_app_cliente/pantallas/app.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/last_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:portal_ofertas_app_cliente/pantallas/GenratesQR.dart';
 
 class CrearQR extends StatefulWidget {
   CrearQR({Key key, this.title, this.idOrden}) : super(key: key);
@@ -102,7 +103,7 @@ class _CrearQRState extends State<CrearQR> {
               child: InkWell(
                 onTap: () => {
                   //ACCION DE CREAR CODIGO QR
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => VerOferta()))
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => GenratesQR()))
                 },
                 child: QrImage(
                   data: widget.idOrden.toString(),

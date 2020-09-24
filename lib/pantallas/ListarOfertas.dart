@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widget/BezierContainer.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/MenuPrincipal.dart';
+import 'package:portal_ofertas_app_cliente/service/HttpService.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:http/http.dart' as http;
@@ -19,6 +20,9 @@ class ListarOfertas extends StatefulWidget {
 }
 
 class _ListarOfertasState extends State<ListarOfertas> {
+  //servicio
+  HttpService httpService = HttpService();
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -102,109 +106,7 @@ class _ListarOfertasState extends State<ListarOfertas> {
         title: Text("Lista de todas las Ofertas"),
       ),
       body: FutureBuilder<List<Oferta>>(
-        future: fetchPhotos(http.Client()),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) print(snapshot.error);
-
-          return snapshot.hasData
-              ? PhotosList(photos: snapshot.data)
-              : Center(child: CircularProgressIndicator());
-        },
-      ),
-    );
-  }
-
-
-  @override
-  Widget build2(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Container(
-        height: height,
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              top: -MediaQuery.of(context).size.height * .15,
-              right: -MediaQuery.of(context).size.width * .4,
-              child: BezierContainer(),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: height * .2),
-                    _title(),
-                    SizedBox(
-                      height: 50,
-                    ),
-
-                    //_listaWidget(),
-
-                    SizedBox(
-                      height: 20,
-                    ),
-                    _submitButton(), //boton submit
-                    SizedBox(height: height * .14),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(top: 40, left: 0, child: _backButton()),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-
-//***************************************************************************************************************************
-//Seccion Lectura de JSON de servicio Rest
-
-Future<List<Oferta>> fetchPhotos(http.Client client) async {
-  final response =
-  await client.get('http://3.83.230.246/productos.php');
-
-  // Use the compute function to run parsePhotos in a separate isolate.
-  return compute(parsePhotos, response.body);
-}
-
-
-// A function that converts a response body into a List<Photo>.
-List<Oferta> parsePhotos(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<Oferta>((json) => Oferta.fromJson(json)).toList();
-}
-
-class MyAppJSONList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final appTitle = 'Isolate Demo';
-
-    return MaterialApp(
-      title: appTitle,
-      home: MyHomePage(title: appTitle),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  final String title;
-
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: FutureBuilder<List<Oferta>>(
-        future: fetchPhotos(http.Client()),
+        future: httpService.fetchPhotos(http.Client()),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
 
@@ -227,10 +129,36 @@ class PhotosList extends StatelessWidget {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
+        crossAxisSpacing: 10.0,
+        mainAxisSpacing: 10.0,
       ),
       itemCount: photos.length,
       itemBuilder: (context, index) {
-        return Image.network(photos[index].images.first.src);
+        return Center(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 5,
+              ),
+              FadeInImage.assetNetwork(
+                  placeholder: 'placeholder.svg',
+                  image: "${photos[index].images.first.src}",
+                  width: 60.0
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text("id: "+photos[index].id.toString()+" producto: "+photos[index].name,
+                  style: Theme.of(context).textTheme.title),
+              Text("precio regular: "+photos[index].regularPrice+" / oferta: "+photos[index].price,
+                  style: Theme.of(context).textTheme.title),
+              SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
+        );
+        //return Image.network(photos[index].images.first.src);
       },
     );
   }

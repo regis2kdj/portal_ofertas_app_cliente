@@ -38,7 +38,7 @@ class _CrearQRState extends State<CrearQR> {
   Widget _submitButton() {
     return InkWell(
       onTap: () {
-        //ACCION DE CREAR CODIGO QR
+        //ACCION DE CALIFICAR LA COMPRA
         //Navigator.push(context, MaterialPageRoute(builder: (context) => VerOferta()))
       },
 
@@ -60,7 +60,7 @@ class _CrearQRState extends State<CrearQR> {
                 end: Alignment.centerRight,
                 colors: [Color(0xffbdbdbd), Color(0xff01579b)])),
         child: Text(
-          'Crear',
+          'Califique su compra!',
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
@@ -72,12 +72,27 @@ class _CrearQRState extends State<CrearQR> {
     return RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
-            text: 'Ofertas App - Crear QR',
+            text: 'QR',
             style: GoogleFonts.portLligatSans(
               textStyle: Theme.of(context).textTheme.display1,
               fontSize: 30,
               fontWeight: FontWeight.w700,
               color: Color(0xff01579b),
+            )
+        )
+    );
+  }
+
+  Widget _subtitle() {
+    return RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+            text: 'Para redimir su oferta, espere a que el comercio lea el código generado',
+            style: GoogleFonts.portLligatSans(
+              textStyle: Theme.of(context).textTheme.title,
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
             )
         )
     );
@@ -139,14 +154,15 @@ class _CrearQRState extends State<CrearQR> {
                   children: <Widget>[
                     SizedBox(height: height * .2),
                     _title(),
+                    _subtitle(),
                     SizedBox(
-                      height: 50,
+                      height: 10,
                     ),
 
                     _buttonsMenu_CreateQR(),
 
                     SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
                     _submitButton(), //boton submit
                     SizedBox(height: height * .14),
@@ -154,7 +170,7 @@ class _CrearQRState extends State<CrearQR> {
                 ),
               ),
             ),
-            Positioned(top: 40, left: 0, child: _backButton()),
+            Positioned(top: 20, left: 0, child: _backButton()),
           ],
         ),
       ),

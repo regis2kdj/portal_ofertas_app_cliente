@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'widget/BezierContainer.dart';
-import 'package:portal_ofertas_app_cliente/pantallas/MenuPrincipal.dart';
+import 'package:portal_ofertas_app_cliente/pantallas/VerOferta.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
+
+import 'package:intl/intl.dart';
+import 'dart:convert' show utf8;
+import 'package:portal_ofertas_app_cliente/service/HttpService.dart';
+
 
 class BuscarOferta extends StatefulWidget {
   BuscarOferta({Key key, this.title}) : super(key: key);
@@ -69,13 +79,12 @@ class _BuscarOfertaState extends State<BuscarOferta> {
 
          new Form(
           key: keyForm,
-          child: _entryField("# de oferta",numOferta),
+          child: _entryField("# de orden de oferta",numOferta),
         ),
 
       ],
     );
   }
-
 
   Widget _submitButton() {
     return InkWell(
@@ -83,8 +92,20 @@ class _BuscarOfertaState extends State<BuscarOferta> {
         //ACCION DE BUSCAR OFERTA
         if (keyForm.currentState.validate()) {
           print("# de Oferta: ${numOferta.text}");
+
         }
-        //Navigator.push(context, MaterialPageRoute(builder: (context) => VerOferta()))
+        final datosApp = DatosApp(idOferta:numOferta.text);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => VerOferta(datosApp: datosApp)));
+
+        /*
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>; InfoScreen(idArtiste: data[index]._id),
+              ),
+          );
+          */
+
       },
 
       child: Container(
@@ -117,7 +138,7 @@ class _BuscarOfertaState extends State<BuscarOferta> {
     return RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
-            text: 'Ofertas App - Buscar Oferta',
+            text: 'Compraste una oferta, puedes buscar aquí!',
             style: GoogleFonts.portLligatSans(
               textStyle: Theme.of(context).textTheme.display1,
               fontSize: 30,

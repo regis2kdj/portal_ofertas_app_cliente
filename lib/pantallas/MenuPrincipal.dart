@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'widget/BezierContainer.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/InicioSesion.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/CrearQR.dart';
+import 'package:portal_ofertas_app_cliente/pantallas/RegistroUsuario.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/BuscarOferta.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/ComprarOferta.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/ListarOfertas.dart';
@@ -118,9 +119,9 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => CrearQR())), // needed
+                    context, MaterialPageRoute(builder: (context) => RegistroUsuario())), // needed
                 child: Image.asset(
-                  "images/crearte_qr_icon.png",
+                  "images/register.png",
                   width: 140,
                   height: 140,
                   fit: BoxFit.cover,
@@ -128,7 +129,7 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
               ),
             ),
             Text(
-              'Crear QR',
+              'Crear cliente',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ],
@@ -197,7 +198,7 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
               ),
             ),
             Text(
-              'Comprar Oferta',
+              'Nueva Oferta',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ],

@@ -55,6 +55,8 @@ flutter:
     - images/list_all.png         #creada por RR
     - images/buy_offer_icon.png   #creada por RR
     - images/crearte_qr_icon.png  #creada por RR
+    - images/register.png #creado por elvis365
+    - images/placeholder.svg #creado por elvis365
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

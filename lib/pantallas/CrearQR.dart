@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'widget/BezierContainer.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/MenuPrincipal.dart';
+import 'package:portal_ofertas_app_cliente/pantallas/app.dart';
+import 'package:portal_ofertas_app_cliente/pantallas/last_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -41,7 +43,7 @@ class _CrearQRState extends State<CrearQR> {
     return InkWell(
       onTap: () {
         //ACCION DE CALIFICAR LA COMPRA
-        //Navigator.push(context, MaterialPageRoute(builder: (context) => VerOferta()))
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SplashScreen()));
       },
 
       child: Container(

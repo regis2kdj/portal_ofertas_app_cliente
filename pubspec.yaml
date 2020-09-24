@@ -55,6 +55,10 @@ flutter:
     - images/list_all.png         #creada por RR
     - images/buy_offer_icon.png   #creada por RR
     - images/crearte_qr_icon.png  #creada por RR
+    - images/angry.gif  #creada por AACHS
+    - images/hearteyes.gif  #creada por AACHS
+    - images/mmm.gif  #creada por AACHS
+    - images/bg.png  #creada por AACHS
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

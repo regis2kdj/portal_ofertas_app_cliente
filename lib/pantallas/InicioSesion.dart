@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/RegistroUsuario.dart';
 import 'package:portal_ofertas_app_cliente/pantallas/MenuPrincipal.dart';
+import 'package:portal_ofertas_app_cliente/pantallas/app.dart';
+import 'package:portal_ofertas_app_cliente/pantallas/last_page.dart';
 import 'package:portal_ofertas_app_cliente/service/HttpService.dart';
 import 'package:portal_ofertas_app_cliente/model/Cliente.dart';
 import 'package:portal_ofertas_app_cliente/model/Usuario.dart';
@@ -42,7 +44,7 @@ class _InicioSesionState extends State<InicioSesion> {
           if (_progress == 1) {
             timer.cancel();
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MenuPrincipal()));
+                context, MaterialPageRoute(builder: (context) => MenuPrincipal())); //App
           } else {
             _progress += 0.25;
           }
